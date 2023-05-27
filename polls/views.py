@@ -2,9 +2,11 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    ouput = ", ".join([q.question_text for q in latest_question_list])
+    return HttpResponse(ouput)
 
-def details(request, question_id):
+def detail(request, question_id):
     return HttpResponse("You're looking st question %s." % question_id)
 
 def results(request, question_id):
